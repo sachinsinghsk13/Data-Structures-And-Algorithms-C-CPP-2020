@@ -79,9 +79,40 @@ void LinkedList::display() {
 bool LinkedList::isEmpty() {
 	return head == nullptr;
 }
-
+// Time O(n), Sapce O(1)
 int LinkedList::remove(int position) {
-
+	if (head != nullptr) {
+		if (position == 1) {
+			Node* nodeToBeDeleted = head;
+			head = head->next;
+			int value = nodeToBeDeleted->item;
+			delete nodeToBeDeleted; // free memory
+			return value;
+		}
+		else {
+			int count = 1;
+			Node *current = head, *prev = head;
+			bool flag = false;
+			while (count < position) {
+				prev = current;
+				current = current->next;
+				if (current == nullptr) {
+					flag = true;
+					break;
+				}
+				count++;
+			}
+			if (!flag) {
+				prev->next = current->next;
+				int value = current->item;
+				delete current; // free memory
+				return value;
+			}
+			else
+				std::cout << "Position not valid." << std::endl;
+		}
+	}
+	return -1;
 }
 
 int LinkedList::get(int position) {
