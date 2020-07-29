@@ -1,6 +1,14 @@
 #ifndef _DOUBLY_LINKED_LIST_
 #define _DOUBLY_LINKED_LIST_
-#include "doublynode.h"
+
+class DoublyNode {
+    public:
+        int data;
+        DoublyNode *next, *prev;
+        DoublyNode();
+        DoublyNode(int data);
+        ~DoublyNode();
+};
 
 class DoublyLinkedList {
     private:

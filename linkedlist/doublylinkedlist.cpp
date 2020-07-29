@@ -1,6 +1,22 @@
 #include <iostream>
 #include "doublylinkedlist.h"
 
+DoublyNode::DoublyNode()
+{
+    data = 0;
+    next = prev = nullptr;
+}
+
+DoublyNode::DoublyNode(int data)
+{
+    this->data = data;
+    next = prev = nullptr;
+}
+
+DoublyNode::~DoublyNode()
+{
+}
+
 DoublyLinkedList::DoublyLinkedList()
 {
     head = tail = nullptr;
@@ -103,5 +119,4 @@ void DoublyLinkedList::deleteNode(int val)
 
 void DoublyLinkedList::deleteByPosition(int pos)
 {
-  
 }
