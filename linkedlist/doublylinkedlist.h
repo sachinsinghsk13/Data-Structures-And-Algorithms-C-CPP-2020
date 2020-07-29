@@ -17,11 +17,10 @@ class DoublyLinkedList {
     public:
         DoublyLinkedList();
         ~DoublyLinkedList();
-        void create();
-        DoublyNode *getNode();
-        void append(DoublyNode *node);
-        void traverse();
-        void deleteNode(int val);
-        void deleteByPosition(int pos);
+        bool isEmpty();
+        void insert(int position, int data);
+        int remove(int position);
+        void display();
+        int length();
 };
 #endif

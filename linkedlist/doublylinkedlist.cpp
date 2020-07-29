@@ -20,103 +20,145 @@ DoublyNode::~DoublyNode()
 DoublyLinkedList::DoublyLinkedList()
 {
     head = tail = nullptr;
+    size = 0;
 }
 
 DoublyLinkedList::~DoublyLinkedList()
 {
-}
-
-DoublyNode *DoublyLinkedList::getNode()
-{
-    int data;
-    std::cout << "Enter Data : ";
-    std::cin >> data;
-    DoublyNode *node = new DoublyNode(data);
-    return node;
-}
-
-void DoublyLinkedList::append(DoublyNode *node)
-{
-    if (head == nullptr)
+    // release memeory
+    DoublyNode *temp;
+    while (head != nullptr)
     {
-        head = tail = node;
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
+void DoublyLinkedList::insert(int position, int data)
+{
+    if (position > 0 && position <= size + 1)
+    {
+        DoublyNode *node = new DoublyNode(data);
+        if (head != nullptr)
+        {
+            if (position == 1) // add at begining
+            {
+                head->prev = node;
+                node->next = head;
+                head = node;
+            }
+            else
+            {
+                int count = 1;
+                bool flag = false;
+                DoublyNode *temp = head;
+                while (count != position - 1)
+                {
+                    temp = temp->next;
+                    count++;
+                }
+                if (temp != tail)
+                {
+                    (temp->next)->prev = node;
+                    node->next = temp->next;
+                    node->prev = temp;
+                    temp->next = node;
+                }
+                else
+                { // add at end
+                    node->prev = tail;
+                    tail->next = node;
+                    tail = node;
+                }
+            }
+        }
+        else // add first node
+        {
+            head = tail = node;
+        }
+        size++;
     }
     else
     {
-        tail->next = node;
-        node->prev = tail;
-        tail = node;
+        std::cout << "Position not valid " << std::endl;
     }
 }
 
-void DoublyLinkedList::create()
+int DoublyLinkedList::remove(int position)
 {
-    char ch;
-    while (true)
+    if (position > 0 && position <= size)
     {
-        std::cout << "Any more node to be added (y/n)  : ";
-        std::cin >> ch;
-        if (ch == 'n')
-            break;
-        DoublyNode *node = getNode();
-        append(node);
-    }
-}
+        DoublyNode *current = head;
 
-void DoublyLinkedList::traverse()
-{
-    DoublyNode *link = head;
-    while (link != nullptr)
-    {
-        std::cout << link->data << " ";
-        link = link->next;
-    }
-    std::cout << std::endl;
-}
-
-void DoublyLinkedList::deleteNode(int val)
-{
-    DoublyNode *current, *temp;
-    current = head;
-    while (current != nullptr)
-    {
-        if (current->data == val)
-            break;
-        current = current->next;
-    }
-
-    if (current != nullptr)
-    {
-        if (current == head)
+        if (position == 1)
         {
-            head->prev = nullptr;
-            head = head->next;
-            delete current;
+            if (head == tail)
+            {
+                head = tail = nullptr;
+            }
+            else
+            {
+                (head->next)->prev = nullptr;
+                head = head->next;
+            }
         }
-
-        else if (current == tail)
-        {
-            tail = current->prev;
-            (current->prev)->next = nullptr;
-            delete current;
-        }
-
         else
         {
-            (current->prev)->next = current->next;
-            (current->next)->prev = current->prev;
-            delete current;
-        }
 
-        if (head == nullptr)
-            tail = nullptr;
+            int count = 1;
+            while (count != position)
+            {
+                current = current->next;
+                count++;
+            }
+            if (current == tail)
+            {
+                (tail->prev)->next = nullptr;
+                tail = tail->prev;
+            }
+            else
+            {
+                (current->next)->prev = current->prev;
+                (current->prev)->next = current->next;
+            }
+        }
+        int data = current->data;
+        delete current;
+        size--;
+        return data;
     }
     else
     {
-        std::cout << "Node with value " << val << " is not found." << std::endl;
+        std::cout << "Invalid position." << std::endl;
+        return -1;
     }
 }
 
-void DoublyLinkedList::deleteByPosition(int pos)
+bool DoublyLinkedList::isEmpty()
 {
+    return head == nullptr;
+}
+
+int DoublyLinkedList::length()
+{
+    return size;
+}
+
+void DoublyLinkedList::display()
+{
+    if (!isEmpty())
+    {
+        DoublyNode *temp = head;
+        while (temp != nullptr)
+        {
+            std::cout << temp->data << " ";
+            temp = temp->next;
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "List is Empty" << std::endl;
+    }
 }
