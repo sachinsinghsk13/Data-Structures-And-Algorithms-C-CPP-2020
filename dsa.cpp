@@ -5,6 +5,11 @@ int main()
 {
    Polynomial p;
    p.create();
-   p.display();   
+   p.display();
+   Polynomial q;
+   q.create();
+   q.display();
+   Polynomial r = p.add(q);
+   r.display();   
    return 0;
 }

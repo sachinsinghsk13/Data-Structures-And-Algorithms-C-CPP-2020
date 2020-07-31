@@ -15,13 +15,14 @@ class PolyNode
 class Polynomial {
     private:
         PolyNode *head, *tail;
-        int totalTerms;
     public:
         Polynomial();
         ~Polynomial();
         void create();
         void display();
         void append(PolyNode *node);
+        Polynomial add(Polynomial b);
+
 };
 
 #endif

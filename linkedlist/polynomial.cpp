@@ -16,9 +16,9 @@ PolyNode::PolyNode(int coefficient, int exponent)
 
 PolyNode::~PolyNode() {}
 
-Polynomial::Polynomial() {
+Polynomial::Polynomial()
+{
     head = tail = nullptr;
-    totalTerms = 0;
 }
 
 Polynomial::~Polynomial()
@@ -67,11 +67,11 @@ void Polynomial::display()
     {
         std::cout << "Polynomial has no terms" << std::endl;
     }
-    
 }
 
 void Polynomial::create()
 {
+    int totalTerms;
     std::cout << "Enter No of Terms in Polynomial : ";
     std::cin >> totalTerms;
     std::cout << "Enter Polynomail Terms : ";
@@ -83,5 +83,57 @@ void Polynomial::create()
         PolyNode *node = new PolyNode(coeff, expo);
         append(node);
     }
-    
+}
+
+Polynomial Polynomial::add(Polynomial b)
+{
+    Polynomial c;
+    PolyNode *first = head, *second = b.head;
+    int expo = 0, coeff = 0;
+
+    while (first != nullptr && second != nullptr)
+    {
+        if (first->exponent == second->exponent)
+        {
+            coeff = first->coefficient + second->coefficient;
+            expo = first->exponent;
+
+            first = first->next;
+            second = second->next;
+        }
+        else if (first->exponent > second->exponent)
+        {
+            coeff = first->coefficient;
+            expo = first->exponent;
+            first = first->next;
+        }
+        else
+        {
+            coeff = second->coefficient;
+            expo = second->exponent;
+            second = second->next;
+        }
+        PolyNode *newTermNode = new PolyNode(coeff, expo);
+        c.append(newTermNode);
+    }
+
+    while (first != nullptr)
+    {
+        coeff = first->coefficient;
+        expo = first->exponent;
+        first = first->next;
+        PolyNode *newTermNode = new PolyNode(coeff, expo);
+        c.append(newTermNode);
+    }
+
+    while (second != nullptr)
+    {
+        coeff = second->coefficient;
+        expo = second->exponent;
+        second = second->next;
+        PolyNode *newTermNode = new PolyNode(coeff, expo);
+        c.append(newTermNode);
+    }
+
+    return c;
 }
