@@ -137,3 +137,52 @@ Polynomial Polynomial::add(Polynomial b)
 
     return c;
 }
+
+Polynomial Polynomial::multiply(Polynomial b)
+{
+    Polynomial c;
+
+    PolyNode *first = head, *second;
+    while (first != nullptr)
+    {
+        second = b.head;
+        while (second != nullptr)
+        {
+            int coeff = first->coefficient * second->coefficient;
+            int expo = first->exponent + second->exponent;
+            PolyNode *current = c.head, *prev = nullptr;
+            bool flag = false;
+            while (current != nullptr)
+            {
+                if (expo == current->exponent)
+                {
+                    flag = true;
+                    break;
+                }
+                if (current->exponent < expo)
+                    break;
+                prev = current;
+                current = current->next;
+            }
+
+            if (flag)
+            {
+                current->coefficient = current->coefficient + coeff;
+            }
+            else if (current != nullptr)
+            {
+                PolyNode *term = new PolyNode(coeff, expo);
+                term->next = prev->next;
+                prev->next = term;
+            }
+            else
+            {
+                PolyNode *term = new PolyNode(coeff, expo);
+                c.append(term);
+            }
+            second = second->next;
+        }
+        first = first->next;
+    }
+    return c;
+}

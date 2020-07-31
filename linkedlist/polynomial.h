@@ -22,6 +22,7 @@ class Polynomial {
         void display();
         void append(PolyNode *node);
         Polynomial add(Polynomial b);
+        Polynomial multiply(Polynomial b);
 
 };
 

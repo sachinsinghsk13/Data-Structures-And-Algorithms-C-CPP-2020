@@ -9,7 +9,7 @@ int main()
    Polynomial q;
    q.create();
    q.display();
-   Polynomial r = p.add(q);
+   Polynomial r = p.multiply(q);
    r.display();   
    return 0;
 }
