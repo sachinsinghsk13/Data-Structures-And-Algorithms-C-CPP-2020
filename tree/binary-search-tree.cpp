@@ -26,7 +26,31 @@ BinarySearchTree::~BinarySearchTree()
 
 void BinarySearchTree::insert(int key)
 {
-    insert(root, key);
+    // insert(root, key);  /*  for insert by recursion and comment the iterative process*/
+    
+    
+    // Iterative process for inserting..
+
+    if (root != nullptr) {
+        Node *current = root, *parent = root;
+        while (current != nullptr) {
+            parent = current;
+            if (key < current->key)
+                current = current->left;
+            else
+                current = current->right;
+        }
+
+        if (key < parent->key)
+            parent->left = new Node(key);
+        else
+            parent->right = new Node(key);
+    }
+    else
+    {
+        root = new Node(key);
+    }
+    
 }
 /*
     Method for recursively inserting a key

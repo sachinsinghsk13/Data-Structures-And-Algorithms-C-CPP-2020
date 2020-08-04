@@ -15,6 +15,8 @@ int main()
    bst.insert(180);
    bst.insert(120);
    bst.insert(30);
+   bst.insert(2003);
+   bst.insert(12321);
    bst.inorder();
    cout << endl;
    bst.postorder();
