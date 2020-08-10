@@ -19,14 +19,18 @@ private:
     void inorder(Node *root);
     void preorder(Node *root);
     void postorder(Node *root);
+    Node *remove(Node *loc, int key);
+    Node *find_lowest(Node *loc);
 
 public:
     BinarySearchTree();
     ~BinarySearchTree();
     void insert(int key);
+    void remove(int key);
     void inorder();
     void preorder();
     void postorder();
+    void bfs();
 };
 
 #endif
