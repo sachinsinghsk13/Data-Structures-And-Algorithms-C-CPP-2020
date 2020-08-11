@@ -1,8 +1,7 @@
 #include <iostream>
-#include <tree/binary-search-tree.h>
+#include <cmath>
+using namespace std;
 int main() {
-	BinarySearchTree bst;
-	bst.insert(20);
-	bst.bfs();
+	cout << max(-1, 0) << endl;
 	return 0;
 }

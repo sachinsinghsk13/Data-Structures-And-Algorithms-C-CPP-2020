@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <cmath>
 
 Node::Node()
 {
@@ -254,4 +255,66 @@ Node *BinarySearchTree::remove(Node *loc, int key) {
     else {
         std::cout << "Key Not Found" << std::endl;
     }
+}
+
+void BinarySearchTree::removeIterative(int key) {
+    Node *current = root, *parent = nullptr;
+    bool flag = false;
+
+    while (current != nullptr) {
+        if (key == current->key) {
+            flag = true;
+            break;
+        }
+        parent = current;
+        if (key < current->key)
+            current = current->left;
+        else
+            current = current->right;
+    }
+
+    if (flag) { // key found
+        if (!current->left && !current->right) {  // leaf node
+            if (current->key < parent->key)
+                parent->left = nullptr;
+            else
+                parent->right = nullptr;
+            delete current;
+        }
+
+        else if (current->left && !current->right) {
+            Node *leftChild = current->left;
+            if (current->key < parent->key)
+                parent->left = leftChild;
+            else
+                parent->right = leftChild;
+            delete current;
+        }
+
+        else if (!current->left && current->right) {
+            Node *rightChild = current->left;
+            if (current->key < parent->key)
+                parent->left = rightChild;
+            else
+                parent->right = rightChild;
+            delete current;
+        }
+
+        else {
+            // TODO: implement
+        }
+    }
+    else
+        std::cout << "Key Not Found" << std::endl;
+
+}
+
+int BinarySearchTree::height(Node *loc) {
+    if (!loc)
+        return -1;
+    return 1 + std::max(height(loc->left), height(loc->right));
+}
+
+int BinarySearchTree::height() {
+    return height(root);
 }
