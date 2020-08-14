@@ -1,15 +1,24 @@
 #include <iostream>
-#include "sorting_and_searching_algos/searching-algos.h"
+#include "sorting_and_searching_algos/sorting-algos.h"
 using namespace std;
+
+void print(int array[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+}
 
 int main()
 {
-    int arr[] = {0, 2, 4, 7, 8, 9, 11, 15, 16, 23, 45, 50, 65};
+    int arr[] = {30, 52, 29, 87, 63, 27, 19, 54, 0};
     int size = sizeof(arr) / sizeof(arr[0]);
     int key = 9;
-    cout << linear_search(arr, size, key) << endl;
-    cout << binary_search(arr, size, key) << endl;
-    cout << interpolation_search(arr, size, key) << endl;
-    cout << jump_search(arr, size, key) << endl;
+    print(arr, size);
+    merge_sort(arr, 0, size - 1);
+    cout << "sorted array" << endl;
+    print(arr, size);
     return 0;
 }
