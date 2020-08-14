@@ -1,5 +1,6 @@
 #include "searching-algos.h"
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int linear_search(int array[], int array_size, int key)
@@ -61,6 +62,28 @@ int interpolation_search(int array[], int array_size, int key)
         else
             start = mid + 1;
     }
-    cout << "Interpolation Search Comparisons : "  << count << endl;
+    cout << "Interpolation Search Comparisons : " << count << endl;
     return index;
+}
+
+int jump_search(int array[], int array_size, int key)
+{
+    int step = sqrt(array_size);
+    int prev = 0;
+    while (array[std::min(step, array_size) - 1] < key) {
+        prev = step;
+        step += sqrt(array_size);
+        if (prev >= array_size)
+            return -1;   
+    }
+
+    while (array[prev] < key) {
+        prev++;
+        if (prev == std::min(step, array_size))
+            return -1;
+    }
+
+    if (array[prev] == key)
+        return prev;
+    return -1;
 }
