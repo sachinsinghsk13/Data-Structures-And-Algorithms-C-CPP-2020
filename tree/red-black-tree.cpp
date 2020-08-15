@@ -66,29 +66,54 @@ void RBTree::inorder(RBNode *root)
     }
 }
 
-RBNode *RBTree::rotateLeft(RBNode *root)
+void RBTree::rotateLeft(RBNode *current_root)
 {
-    RBNode *newRoot = root->right;
-    newRoot->parent = root->parent;
-    root->right = newRoot->left;
+    RBNode *newRoot = current_root->right;
+    // current_root is not root of RBTree
+    if (current_root->parent)
+    {
+        if (current_root->parent->left == root)
+            current_root->parent->left = newRoot;
+        else
+            current_root->parent->right = newRoot;
+    }
+    // current_root is root of the Tree
+    else
+    {
+        root = newRoot;
+    }
+    newRoot->parent = current_root->parent;
+    current_root->right = newRoot->left;
     if (newRoot->left)
         newRoot->left->parent = root;
-    newRoot->left = root;
-    root->parent = newRoot;
-    return newRoot;
+    newRoot->left = current_root;
+    current_root->parent = newRoot;
 }
 
-RBNode *RBTree::rotateRight(RBNode *root)
+void RBTree::rotateRight(RBNode *current_root)
 {
-    RBNode *newRoot = root->left;
-    newRoot->parent = root->parent;
-    root->left = newRoot->right;
+    RBNode *newRoot = current_root->left;
+    // current_root is not root of RBTree
+    if (current_root->parent)
+    {
+        if (current_root->parent->left == root)
+            current_root->parent->left = newRoot;
+        else
+            current_root->parent->right = newRoot;
+    }
+    // current_root is root of the Tree
+    else
+    {
+        root = newRoot;
+    }
+    newRoot->parent = current_root->parent;
+    current_root->left = newRoot->right;
     if (newRoot->right)
         newRoot->right->parent = root;
-    newRoot->right = root;
-    root->parent = newRoot;
-    return newRoot;
+    newRoot->right = current_root;
+    current_root->parent = newRoot;
 }
+
 void RBTree::swap_color(RBNode *a, RBNode *b)
 {
     Color tmp = a->color;
@@ -147,13 +172,13 @@ void RBTree::restore_red_black_restrictions(RBNode *node)
                 if (node->key < node->parent->key)
                 {
                     swap_color(node->parent, granparent);
-                    granparent = rotateRight(granparent);
+                    rotateRight(granparent);
                 }
                 // LR case
                 else
                 {
-                    node->parent = rotateLeft(node->parent);
-                    granparent = rotateRight(granparent);
+                    rotateLeft(node->parent);
+                    rotateRight(granparent);
                 }
             }
             else
@@ -161,14 +186,14 @@ void RBTree::restore_red_black_restrictions(RBNode *node)
                 // RL case
                 if (node->key < node->parent->key)
                 {
-                    node->parent = rotateRight(node->parent);
-                    granparent = rotateLeft(granparent);
+                    rotateRight(node->parent);
+                    rotateLeft(granparent);
                 }
                 // RR
                 else
                 {
                     swap_color(node->parent, granparent);
-                    granparent = rotateLeft(granparent);
+                    rotateLeft(granparent);
                 }
             }
         }
