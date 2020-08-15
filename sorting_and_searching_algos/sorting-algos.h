@@ -10,4 +10,9 @@ void selection_sort(int array[], int size);
 void merge_sort(int array[], int start, int end);
 void merge(int array[], int start, int mid, int end);
 
+
+// Quick Sort
+void quick_sort(int array[], int start, int end);
+int partition(int array[], int start, int end);
+
 #endif

@@ -72,7 +72,7 @@ void RBTree::rotateLeft(RBNode *current_root)
     // current_root is not root of RBTree
     if (current_root->parent)
     {
-        if (current_root->parent->left == root)
+        if (current_root->parent->left == current_root)
             current_root->parent->left = newRoot;
         else
             current_root->parent->right = newRoot;
@@ -96,7 +96,7 @@ void RBTree::rotateRight(RBNode *current_root)
     // current_root is not root of RBTree
     if (current_root->parent)
     {
-        if (current_root->parent->left == root)
+        if (current_root->parent->left == current_root)
             current_root->parent->left = newRoot;
         else
             current_root->parent->right = newRoot;
@@ -177,6 +177,7 @@ void RBTree::restore_red_black_restrictions(RBNode *node)
                 // LR case
                 else
                 {
+                    swap_color(node, granparent);
                     rotateLeft(node->parent);
                     rotateRight(granparent);
                 }
@@ -186,6 +187,7 @@ void RBTree::restore_red_black_restrictions(RBNode *node)
                 // RL case
                 if (node->key < node->parent->key)
                 {
+                    swap_color(node, granparent);
                     rotateRight(node->parent);
                     rotateLeft(granparent);
                 }
