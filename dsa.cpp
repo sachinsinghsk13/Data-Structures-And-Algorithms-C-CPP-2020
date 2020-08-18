@@ -1,16 +1,12 @@
 #include <iostream>
-#include "heaps/binary-max-heap.h"
+#include "arrays/matrix.h"
 using namespace std;
 
 int main()
 {
-	MaxHeap heap(5);
-	for (int i = 0; i < 100; i++) {
-		heap.insert(i);
-	}
-	while (!heap.isEmpty()) {
-		heap.traverse();
-		heap.pop();
-	}
+	Matrix a(3, 3);
+	a.read_matrix();
+	a.print_matrix();
+	a.transpose_matrix()->print_matrix();
 	return 0;
 }
