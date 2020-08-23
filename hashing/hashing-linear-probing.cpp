@@ -4,7 +4,8 @@ using namespace std;
 pair<int, int> table[MAX];
 int size = 0;
 int generate_hash_code(int key, int count) {
-	return (key + count) % MAX;
+    // return (key + count * count) % MAX; Quadratic Probing
+	return (key + count) % MAX; // Linear Probing
 }
 
 void put(int key, int value) {
