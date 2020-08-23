@@ -1,23 +1,24 @@
 #include <iostream>
-#include <fstream>
+#include "tree/splay-tree.h"
 using namespace std;
 
-class record {
-	public:
-		string name;
-};
+int main()
+{
+	splay_tree t;
+	t.insert(24, 10);
+	t.insert(13, 11);
+	t.insert(17, 12);
+	t.insert(25, 13);
+	t.insert(34, 14);
+	t.insert(22, 15);
 
-int main() {
-	record a, b, c;
-	c.name = "sachin singh";
-	a.name = "akanksha sharma";
-	b.name = "shivam sharma";
+	t.insert(20, 16);
 
-	fstream f;
-	f.open("student.dat");
-	// f.write((char*) &a, sizeof(a));
-	// f.write((char*) &b, sizeof(b));
-	// f.write((char*) &c, sizeof(c));
-	f.close();
+	t.insert(14, 17);
+	t.insert(29, 18);
+
+	cout << t.get_top() << endl; // 29
+	cout << t.search(25) << endl;
+	cout << t.get_top() << endl;
 	return 0;
 }
